@@ -89,7 +89,7 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
 4.  jsoup 라이브러리를 추가한다.
 	[jsoup](https://jsoup.org/download) 라이브러리를 다운로드 받아서, src/java/com/mydomain/openfire/opengraph 폴더에  lib 폴더를 생성 후 다운로드 받은 jsoup 라이브러리를 추가한다.
 
-4. Build Path에 Opengraph Plugin 소스 폴더를 추가한다.
+5. Build Path에 Opengraph Plugin 소스 폴더를 추가한다.
 	Eclipse에서 Properties > Java Build Path > Source > Add Folder 버튼을 클릭해서 opengraph > src > java 폴더를 선택한다. 그리고, "OK" 버튼을 클릭해서  Opengraph Plugin 소스 폴더를 Build Path에 추가한다.
 
 6. Plugin 인터페이스를 구현한다.
@@ -121,6 +121,7 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
     ```
 
 7. 패킷 가로채기 기능을 추가한다.
+	implements 에 PacketInterceptor를 추가한다. 그리고, 생성자에 Instance를 추가하고, initializePlugins에는 메시지 Interceptor를 등록을 추가하고, destoryPlugin에는 등록된 Interceptor를 제거를 추가한다. 메시지 패킷을 확인하기 위해 interceptPacket과 isValidTargetPacket 을 추가한다.
 	```
     import org.jivesoftware.openfire.container.Plugin;
 	import org.jivesoftware.openfire.container.PluginManager;
@@ -175,7 +176,9 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
 	}
     ```
 
-6. URL 여부를 판단한다.
+8. URL 여부를 판단한다.
+	메시지가 URL인지 확인을 위해 isUrl 메소드를 추가하고, interceptPacket 메소드에 url 확인 코드를 추가한다.
+
 	```
     @Override
 	public void interceptPacket(Packet packet, Session session, boolean incoming, boolean processed)
@@ -199,6 +202,11 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
 		}	
 	}
 	
+    /**
+	 * URL 여부 체크
+	 * @param str
+	 * @return
+	 */
 	private boolean isUrl(String str) {
         String regex = "[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)";
 
@@ -213,8 +221,8 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
 	}    
     ```
 
-7. Open graph 태그를 파싱한다.
-	
+9. Open graph 태그를 파싱한다.
+	Open Graph 태그를 파싱 후 담을 객체를 생성한다.	
 	```
     public class OpenGraphTag {
 		String url;
@@ -292,6 +300,7 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
 	}
     ```
     
+    현재 날짜와 캐시 기간 비교를 위해 날짜 유틸 클래스를 추가한다.
     ```
     import java.text.ParseException;
 	import java.text.SimpleDateFormat;
@@ -342,6 +351,7 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
 	}
     ```
     
+    Open Graph 파싱을 위한 클래스를 추가한다.
     ```
     import org.jsoup.Jsoup;
 	import org.jsoup.nodes.Document;
@@ -380,6 +390,7 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
                 	result.get(elm.attr(target)).add(elm.attr("content"));
             	}
 
+				// Open Graph 태그가 없는 경우 meta 태그와 본문에서 추출
             	for(String meta : metas){
                 	if (!(result.containsKey(meta) && result.get(meta).size() > 0)){
                     	if(meta.equals(metas[0])){
@@ -425,6 +436,7 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
 	}
     ```
     
+    interceptPacket 메소드에 Open Graph 파싱 코드를 추가한다.
     ```
     @Override
 	public void interceptPacket(Packet packet, Session session, boolean incoming, boolean processed)
@@ -441,8 +453,10 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
         	            url = "http://" + url;
             	    }
                           
+                    // 캐시 저장 확인
                 	OpenGraphTag tag = map.get(url);
         
+        			/ 캐시에 저장이 안되어 있거나 캐시 저장 기간을 초과한 경우 Open Graph 를 파싱 요청한다.
                 	if (tag == null || (MAX_CACHE_DATE < DateUtils.getDiffDate(tag.getCreateDate()))) {
                     	OpenGraphParser parser = new OpenGraphParser();
                     	tag = parser.parser(url);
@@ -453,7 +467,9 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
     	}      
 	}
     ```
-8. 패킷에 append 해서 브로드캐스팅 한다.
+10. 패킷에 append 해서 브로드캐스팅 한다.
+	가로채기한 패킷에 "<x xmlns="jabber:x:og"></x>" 엘리멘트를 추가하고, 하위에 "title, image, url, description" 추가한다.
+    
 	```
     private long MAX_CACHE_DATE = 1L;
     private Map<String, OpenGraphTag> map = new ConcurrentHashMap<String, OpenGraphTag>();
@@ -483,6 +499,7 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
 			            map.put(url, tag);
 			        }
 			        				
+                    // 가로채기한 패킷에 Open Graph 정보 추가
 					Element sendFileElement = receivedMessage.addChildElement("x", "jabber:x:og");
 					sendFileElement.addElement("title").setText(tag.getTitle());
 					sendFileElement.addElement("image").setText(tag.getImage());
@@ -493,13 +510,33 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
 		}	
 	}
     ```
-9. 빌드한다.
+    
+    URL에 Open Graph 정보가 있거나, Meta 정보가 있는 경우에는 클라이언트에 아래와 비슷한 패킷을 받을 것이다. 클라이언트에서는 전달받은 패킷에서 "<x xmlns="jabber:x:og"></x>" 엘리먼트를 파싱해서 UI에 사용하면 된다.
+    ```
+    <message xmlns="jabber:client" to="user01@localhost/56pmeoc6xd" from="room1@conference.localhost/user01" type="groupchat" id="4">
+		<body>https://github.com</body>
+		<x xmlns="jabber:x:event">
+			<composing/>
+		</x>
+		<x xmlns="jabber:x:og">
+			<title>Build software better, together</title>
+			<image>https://assets-cdn.github.com/images/modules/open_graph/github-logo.png</image>
+			<url>https://github.com</url>
+			<description>GitHub is where people build software. More than 27 million people use GitHub to discover, fork, and contribute to over 80 million projects.</description>
+		</x>
+		<data xmlns="jabber:x:data" from="user@localhost" roomID="8" stamp="2018-04-20T00:51:22.939Z"/>
+	</message>
+    ```
+    
+11. Ant로 빌드한다.
 	openfire > build > build.xml 파일을 마우스 오른쪽으로 클릭 후 Run As > External Tools Configurations > Targets 에서 openfire 와 plugins 를 체크한다. 그리고, "Run" 버튼을 클릭해서 빌드를 한다.
+	빌드가 성공적으로 끝나면 /Openfire/target/openfire/plugins 폴더에서 opengraphe.jar 파일을 확인 할 수 있다.
 
+전체 소스 코드는 [Github repo](https://github.com/junglestory/openfire-opengraph) 에서 다운로드 받을 수 있다.
 
 ## Open graph 플러그인 설치
 1. Admin Console의 Plugins 메뉴로 이동한다.
-2. "파일 선택" 버튼을 클릭해서 Open graph 플러그인을 선택한다.
+2. "파일 선택" 버튼을 클릭해서 /Openfire/target/openfire/plugins/opengraph.jar 파일을 선택한다.
 3. "Upload Plugins" 버튼을 클릭한다.
 
 
