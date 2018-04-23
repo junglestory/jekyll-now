@@ -543,3 +543,4 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
 ## 참고자료
 - [Openfire Plugin Developer Guide](http://download.igniterealtime.org/openfire/docs/latest/documentation/plugin-dev-guide.html)
 - [[XMPP] Openfire 플러그인 개발하기](http://trvoid.blogspot.kr/2013/05/openfire.html)
+- [XMPP2APNS](https://github.com/myriky/XMPP2APNS)
