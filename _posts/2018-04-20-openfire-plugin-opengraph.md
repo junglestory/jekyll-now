@@ -26,7 +26,7 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
 	openfire/src/plugins 경로 밑에 opengraph 폴더를 생성한다. 그리고, opengraph 폴더 아래에 src/java/com/mydomain/openfire/opengraph 폴더를 생성하고, plugin.xml 과 pom.xml 파일을 생성한다.
     
     plugin.xml 에는 플러그인의 메인 클래스와 플러그인 정보를 설정한다.
-    ```
+    ```ruby
     <?xml version="1.0" encoding="UTF-8"?>
     <plugin>
         <!-- Main plugin calss -->
