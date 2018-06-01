@@ -162,21 +162,22 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
   </li>
   <li>
     <p>Opengraph 프로젝트를 생성한다.
- openfire/src/plugins 경로 밑에 opengraph 폴더를 생성한다. 그리고, opengraph 폴더 아래에 src/java/com/mydomain/openfire/opengraph 폴더를 생성하고, plugin.xml 과 pom.xml 파일을 생성한다.</p>
+ openfire/src/plugins 경로 밑에 opengraph 폴더를 생성한다. 그리고, opengraph 폴더 아래에 
+ src/java/com/mydomain/openfire/opengraph 폴더를 생성하고, plugin.xml 과 pom.xml 파일을 생성한다.</p>
 
     <p>plugin.xml 에는 플러그인의 메인 클래스와 플러그인 정보를 설정한다.</p>
-    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">&lt;</span><span class="p">?</span><span class="n">xml</span> <span class="n">version</span><span class="o">=</span><span class="s2">"1.0"</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"UTF-8"</span><span class="p">?</span><span class="o">&gt;</span>
- <span class="o">&lt;</span><span class="n">plugin</span><span class="o">&gt;</span>
-     <span class="o">&lt;!--</span> <span class="no">Main</span> <span class="n">plugin</span> <span class="n">calss</span> <span class="o">--&gt;</span>
-     <span class="o">&lt;</span><span class="k">class</span><span class="o">&gt;</span><span class="n">com</span><span class="p">.</span><span class="nf">mydomain</span><span class="p">.</span><span class="nf">openfire</span><span class="p">.</span><span class="nf">opengraph</span><span class="p">.</span><span class="nf">plugin</span><span class="o">.</span><span class="no">OpenGraphPlugin</span><span class="o">&lt;</span><span class="sr">/class&gt;
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+ &lt;plugin&gt;
+     &lt;!-- Main plugin calss --&gt;
+     &lt;class&gt;com.mydomain.openfire.opengraph.plugin.OpenGraphPlugin&lt;/class&gt;
 
      &lt;!-- Plugin meta-data --&gt;
-     &lt;name&gt;Open Graph Parser&lt;/n</span><span class="n">ame</span><span class="o">&gt;</span>
-     <span class="o">&lt;</span><span class="n">description</span><span class="o">&gt;</span><span class="no">Parses</span> <span class="n">to</span> <span class="no">Open</span> <span class="no">Graph</span> <span class="n">tags</span><span class="o">&lt;</span><span class="sr">/description&gt;
-     &lt;author&gt;mycompany&lt;/</span><span class="n">author</span><span class="o">&gt;</span>
-     <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span><span class="o">&lt;</span><span class="sr">/version&gt;
-     &lt;date&gt;03/</span><span class="mi">20</span><span class="o">/</span><span class="mi">2018</span><span class="o">&lt;</span><span class="sr">/date&gt;
- &lt;/</span><span class="n">plugin</span><span class="o">&gt;</span>
+     &lt;name&gt;Open Graph Parser&lt;/name&gt;
+     &lt;description&gt;Parses to Open Graph tags&lt;/description&gt;
+     &lt;author&gt;mycompany&lt;/author&gt;
+     &lt;version&gt;1.0.0&lt;/version&gt;
+     &lt;date&gt;03/20/2018&lt;/date&gt;
+ &lt;/plugin&gt;
 </code></pre></div>    </div>
 
     <p>pom.xml 에는 플러그인, 개발자, 라이브러리 그리고 빌드 정보를 설정한다.</p>
@@ -225,429 +226,437 @@ Openfire에서는 아직 URL 미리보기 기능이 없기에 플러그인으로
   </li>
   <li>
     <p>jsoup 라이브러리를 추가한다.
-<a href="https://jsoup.org/download">jsoup</a> 라이브러리를 다운로드 받아서, src/java/com/mydomain/openfire/opengraph 폴더에  lib 폴더를 생성 후 다운로드 받은 jsoup 라이브러리를 추가한다.</p>
+<a href="https://jsoup.org/download">jsoup</a> 라이브러리를 다운로드 받아서, src/java/com/mydomain/openfire/opengraph 폴더에 
+lib 폴더를 생성 후 다운로드 받은 jsoup 라이브러리를 추가한다.</p>
   </li>
   <li>
     <p>Build Path에 Opengraph Plugin 소스 폴더를 추가한다.
- Eclipse에서 Properties &gt; Java Build Path &gt; Source &gt; Add Folder 버튼을 클릭해서 opengraph &gt; src &gt; java 폴더를 선택한다. 그리고, “OK” 버튼을 클릭해서  Opengraph Plugin 소스 폴더를 Build Path에 추가한다.</p>
+ Eclipse에서 Properties &gt; Java Build Path &gt; Source &gt; Add Folder 버튼을 클릭해서 opengraph &gt; src &gt; java 폴더를 선택한다. 
+ 그리고, “OK” 버튼을 클릭해서  Opengraph Plugin 소스 폴더를 Build Path에 추가한다.</p>
   </li>
   <li>
     <p>Plugin 인터페이스를 구현한다.
  src/java/com/mydomain/openfire/opengraph 디렉토리에 OpenGraphPlugin.java 을 생성하고 아래 소스를 입력한다.</p>
 
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> import org.jivesoftware.openfire.container.Plugin;
- import org.jivesoftware.openfire.container.PluginManager;
- import org.slf4j.Logger;
- import org.slf4j.LoggerFactory;
- import java.io.File;
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kn">import</span> <span class="nn">org.jivesoftware.openfire.container.Plugin</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.jivesoftware.openfire.container.PluginManager</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.slf4j.Logger</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.slf4j.LoggerFactory</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
 
- public class OpenGraphPlugin implements Plugin  {
-     private static final Logger Log = LoggerFactory.getLogger(OpenGraphPlugin.class);
+ <span class="kd">public</span> <span class="kd">class</span> <span class="nc">OpenGraphPlugin</span> <span class="kd">implements</span> <span class="n">Plugin</span>  <span class="o">{</span>
+     <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">Log</span> <span class="o">=</span> <span class="n">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">OpenGraphPlugin</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
         
- 	public OpenGraphPlugin() {
- 	}
+     <span class="kd">public</span> <span class="nf">OpenGraphPlugin</span><span class="o">()</span> <span class="o">{</span>
+     <span class="o">}</span>
     
- 	// 플러그인 초기화
- 	public void initializePlugin(PluginManager manager, File pluginDirectory) {
-    		Log.info("Open graph parser plugin initialize ...");
- 	}
+     <span class="c1">// 플러그인 초기화</span>
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">initializePlugin</span><span class="o">(</span><span class="n">PluginManager</span> <span class="n">manager</span><span class="o">,</span> <span class="n">File</span> <span class="n">pluginDirectory</span><span class="o">)</span> <span class="o">{</span>
+         <span class="n">Log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Open graph parser plugin initialize ..."</span><span class="o">);</span>
+     <span class="o">}</span>
     
- 	// 플러그인 종료
- 	public void destroyPlugin() {
-    		Log.info("Open graph parser plugin destory ...");
- 	}
- }
+     <span class="c1">// 플러그인 종료</span>
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">destroyPlugin</span><span class="o">()</span> <span class="o">{</span>
+         <span class="n">Log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Open graph parser plugin destory ..."</span><span class="o">);</span>
+     <span class="o">}</span>
+ <span class="o">}</span>
 </code></pre></div>    </div>
   </li>
   <li>패킷 가로채기 기능을 추가한다.
- implements 에 PacketInterceptor를 추가한다. 그리고, 생성자에 Instance를 추가하고, initializePlugins에는 메시지 Interceptor를 등록을 추가하고, destoryPlugin에는 등록된 Interceptor를 제거를 추가한다. 메시지 패킷을 확인하기 위해 interceptPacket과 isValidTargetPacket 을 추가한다.
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> import org.jivesoftware.openfire.container.Plugin;
- import org.jivesoftware.openfire.container.PluginManager;
- import org.jivesoftware.openfire.interceptor.InterceptorManager;
- import org.jivesoftware.openfire.interceptor.PacketInterceptor;
- import org.jivesoftware.openfire.interceptor.PacketRejectedException;
- import org.slf4j.Logger;
- import org.slf4j.LoggerFactory;
- import java.io.File;
- import org.xmpp.packet.Packet;
- import org.xmpp.packet.Message;
- import org.jivesoftware.openfire.session.Session;
+ implements 에 PacketInterceptor를 추가한다. 그리고, 생성자에 Instance를 추가하고, initializePlugins에는 메시지 
+ Interceptor를 등록을 추가하고, destoryPlugin에는 등록된 Interceptor를 제거를 추가한다. 메시지 패킷을 확인하기 위해 
+ interceptPacket과 isValidTargetPacket 을 추가한다.
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kn">import</span> <span class="nn">org.jivesoftware.openfire.container.Plugin</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.jivesoftware.openfire.container.PluginManager</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.jivesoftware.openfire.interceptor.InterceptorManager</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.jivesoftware.openfire.interceptor.PacketInterceptor</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.jivesoftware.openfire.interceptor.PacketRejectedException</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.slf4j.Logger</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.slf4j.LoggerFactory</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.xmpp.packet.Packet</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.xmpp.packet.Message</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.jivesoftware.openfire.session.Session</span><span class="o">;</span>
 
- public class OpenGraphPlugin implements Plugin, PacketInterceptor  {
-     private static final Logger Log = LoggerFactory.getLogger(OpenGraphPlugin.class);
-     private InterceptorManager interceptorManager; 
+ <span class="kd">public</span> <span class="kd">class</span> <span class="nc">OpenGraphPlugin</span> <span class="kd">implements</span> <span class="n">Plugin</span><span class="o">,</span> <span class="n">PacketInterceptor</span>  <span class="o">{</span>
+     <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">Log</span> <span class="o">=</span> <span class="n">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">OpenGraphPlugin</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+     <span class="kd">private</span> <span class="n">InterceptorManager</span> <span class="n">interceptorManager</span><span class="o">;</span> 
     
-     public OpenGraphPlugin() {
-         interceptorManager = InterceptorManager.getInstance();
-     }
+     <span class="kd">public</span> <span class="nf">OpenGraphPlugin</span><span class="o">()</span> <span class="o">{</span>
+         <span class="n">interceptorManager</span> <span class="o">=</span> <span class="n">InterceptorManager</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+     <span class="o">}</span>
    
-     public void initializePlugin(PluginManager manager, File pluginDirectory) {
-			Log.info("Open graph parser plugin initialize ...");
-   		
-			// Register a message interceptor manager
-			interceptorManager.addInterceptor(this);       
-     }
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">initializePlugin</span><span class="o">(</span><span class="n">PluginManager</span> <span class="n">manager</span><span class="o">,</span> <span class="n">File</span> <span class="n">pluginDirectory</span><span class="o">)</span> <span class="o">{</span>
+         <span class="n">Log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Open graph parser plugin initialize ..."</span><span class="o">);</span>
+        
+         <span class="c1">// Register a message interceptor manager</span>
+         <span class="n">interceptorManager</span><span class="o">.</span><span class="na">addInterceptor</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>       
+     <span class="o">}</span>
 
-     public void destroyPlugin() {
-			Log.info("Open graph parser plugin destory ...");
-   		
-			// Unregister a message interceptor manager
-			interceptorManager.removeInterceptor(this);
-     }
-	
-     @Override
-     public void interceptPacket(Packet packet, Session session, boolean incoming, boolean processed)
-             throws PacketRejectedException {
- 		if(isValidTargetPacket(packet,incoming,processed)) {
-     		Packet original = packet;               
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">destroyPlugin</span><span class="o">()</span> <span class="o">{</span>
+         <span class="n">Log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Open graph parser plugin destory ..."</span><span class="o">);</span>
+        
+         <span class="c1">// Unregister a message interceptor manager</span>
+         <span class="n">interceptorManager</span><span class="o">.</span><span class="na">removeInterceptor</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+     <span class="o">}</span>
+    
+     <span class="nd">@Override</span>
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">interceptPacket</span><span class="o">(</span><span class="n">Packet</span> <span class="n">packet</span><span class="o">,</span> <span class="n">Session</span> <span class="n">session</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">incoming</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">processed</span><span class="o">)</span>
+             <span class="kd">throws</span> <span class="n">PacketRejectedException</span> <span class="o">{</span>
+         <span class="k">if</span><span class="o">(</span><span class="n">isValidTargetPacket</span><span class="o">(</span><span class="n">packet</span><span class="o">,</span><span class="n">incoming</span><span class="o">,</span><span class="n">processed</span><span class="o">))</span> <span class="o">{</span>
+             <span class="n">Packet</span> <span class="n">original</span> <span class="o">=</span> <span class="n">packet</span><span class="o">;</span>               
                                    
-     		if(original instanceof Message) {
-         		Message receivedMessage = (Message)original;                           
-         		String url = receivedMessage.getBody();
-        		}      
-			}
-     }
-	
-     private boolean isValidTargetPacket(Packet packet, boolean incoming, boolean processed) {
-     	return  !processed &amp;&amp; incoming &amp;&amp; packet instanceof Message;
-     }
- }
+             <span class="k">if</span><span class="o">(</span><span class="n">original</span> <span class="k">instanceof</span> <span class="n">Message</span><span class="o">)</span> <span class="o">{</span>
+                 <span class="n">Message</span> <span class="n">receivedMessage</span> <span class="o">=</span> <span class="o">(</span><span class="n">Message</span><span class="o">)</span><span class="n">original</span><span class="o">;</span>                           
+                 <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">receivedMessage</span><span class="o">.</span><span class="na">getBody</span><span class="o">();</span>
+             <span class="o">}</span>      
+         <span class="o">}</span>
+     <span class="o">}</span>
+    
+     <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isValidTargetPacket</span><span class="o">(</span><span class="n">Packet</span> <span class="n">packet</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">incoming</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">processed</span><span class="o">)</span> <span class="o">{</span>
+         <span class="k">return</span>  <span class="o">!</span><span class="n">processed</span> <span class="o">&amp;&amp;</span> <span class="n">incoming</span> <span class="o">&amp;&amp;</span> <span class="n">packet</span> <span class="k">instanceof</span> <span class="n">Message</span><span class="o">;</span>
+     <span class="o">}</span>
+ <span class="o">}</span>
 </code></pre></div>    </div>
   </li>
   <li>
     <p>URL 여부를 판단한다.
  메시지가 URL인지 확인을 위해 isUrl 메소드를 추가하고, interceptPacket 메소드에 url 확인 코드를 추가한다.</p>
 
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @Override
- public void interceptPacket(Packet packet, Session session, boolean incoming, boolean processed)
-         throws PacketRejectedException {
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nd">@Override</span>
+ <span class="kd">public</span> <span class="kt">void</span> <span class="nf">interceptPacket</span><span class="o">(</span><span class="n">Packet</span> <span class="n">packet</span><span class="o">,</span> <span class="n">Session</span> <span class="n">session</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">incoming</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">processed</span><span class="o">)</span>
+         <span class="kd">throws</span> <span class="n">PacketRejectedException</span> <span class="o">{</span>
 
-     if(isValidTargetPacket(packet,incoming,processed)) {
-         Packet original = packet;			
-						
-         if(original instanceof Message) {
-             Message receivedMessage = (Message)original;
-				
-             String url = receivedMessage.getBody();
+     <span class="k">if</span><span class="o">(</span><span class="n">isValidTargetPacket</span><span class="o">(</span><span class="n">packet</span><span class="o">,</span><span class="n">incoming</span><span class="o">,</span><span class="n">processed</span><span class="o">))</span> <span class="o">{</span>
+         <span class="n">Packet</span> <span class="n">original</span> <span class="o">=</span> <span class="n">packet</span><span class="o">;</span>           
+                        
+         <span class="k">if</span><span class="o">(</span><span class="n">original</span> <span class="k">instanceof</span> <span class="n">Message</span><span class="o">)</span> <span class="o">{</span>
+             <span class="n">Message</span> <span class="n">receivedMessage</span> <span class="o">=</span> <span class="o">(</span><span class="n">Message</span><span class="o">)</span><span class="n">original</span><span class="o">;</span>
+                
+             <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">receivedMessage</span><span class="o">.</span><span class="na">getBody</span><span class="o">();</span>
 
-             if (isUrl(url)) {
-             	if (url.indexOf("http") &lt; 0 &amp;&amp; url.indexOf("https") &lt; 0) {
-             		url = "http://" + url;
-             	}	        	
-		        	
-             }
-         }		
-     }	
- }
-	
- /**
+             <span class="k">if</span> <span class="o">(</span><span class="n">isUrl</span><span class="o">(</span><span class="n">url</span><span class="o">))</span> <span class="o">{</span>
+                 <span class="k">if</span> <span class="o">(</span><span class="n">url</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">"http"</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">url</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">"https"</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                     <span class="n">url</span> <span class="o">=</span> <span class="s">"http://"</span> <span class="o">+</span> <span class="n">url</span><span class="o">;</span>
+                 <span class="o">}</span>               
+                    
+             <span class="o">}</span>
+         <span class="o">}</span>       
+     <span class="o">}</span>   
+ <span class="o">}</span>
+    
+ <span class="cm">/**
   * URL 여부 체크
   * @param str
   * @return
-  */
- private boolean isUrl(String str) {
-     String regex = "[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&amp;//=]*)";
+  */</span>
+ <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isUrl</span><span class="o">(</span><span class="n">String</span> <span class="n">str</span><span class="o">)</span> <span class="o">{</span>
+     <span class="n">String</span> <span class="n">regex</span> <span class="o">=</span> <span class="s">"[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@
+     :%_\\+.~#?&amp;//=]*)"</span><span class="o">;</span>
 
-     Pattern p = Pattern.compile(regex);
-     Matcher m = p.matcher(str);
+     <span class="n">Pattern</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Pattern</span><span class="o">.</span><span class="na">compile</span><span class="o">(</span><span class="n">regex</span><span class="o">);</span>
+     <span class="n">Matcher</span> <span class="n">m</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">matcher</span><span class="o">(</span><span class="n">str</span><span class="o">);</span>
 
-     if (m.find()) {
-     	return true;
-     } 
+     <span class="k">if</span> <span class="o">(</span><span class="n">m</span><span class="o">.</span><span class="na">find</span><span class="o">())</span> <span class="o">{</span>
+         <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+     <span class="o">}</span> 
         
-     return false;
- }    
+     <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+ <span class="o">}</span>    
 </code></pre></div>    </div>
   </li>
   <li>Open graph 태그를 파싱한다.
  Open Graph 태그를 파싱 후 담을 객체를 생성한다.
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> public class OpenGraphTag {
-     String url;
- 	String image;
- 	String type;
- 	String siteName;
- 	String title;
- 	String locale;
- 	String description;
- 	String createDate;
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">OpenGraphTag</span> <span class="o">{</span>
+     <span class="n">String</span> <span class="n">url</span><span class="o">;</span>
+     <span class="n">String</span> <span class="n">image</span><span class="o">;</span>
+     <span class="n">String</span> <span class="n">type</span><span class="o">;</span>
+     <span class="n">String</span> <span class="n">siteName</span><span class="o">;</span>
+     <span class="n">String</span> <span class="n">title</span><span class="o">;</span>
+     <span class="n">String</span> <span class="n">locale</span><span class="o">;</span>
+     <span class="n">String</span> <span class="n">description</span><span class="o">;</span>
+     <span class="n">String</span> <span class="n">createDate</span><span class="o">;</span>
 
- 	public String getUrl() {
-     	return url;
- 	}
+     <span class="kd">public</span> <span class="n">String</span> <span class="nf">getUrl</span><span class="o">()</span> <span class="o">{</span>
+         <span class="k">return</span> <span class="n">url</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	public void setUrl(String url) {
-     	this.url = url;
- 	}
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUrl</span><span class="o">(</span><span class="n">String</span> <span class="n">url</span><span class="o">)</span> <span class="o">{</span>
+         <span class="k">this</span><span class="o">.</span><span class="na">url</span> <span class="o">=</span> <span class="n">url</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	public String getImage() {
-     	return image;
- 	}
+     <span class="kd">public</span> <span class="n">String</span> <span class="nf">getImage</span><span class="o">()</span> <span class="o">{</span>
+         <span class="k">return</span> <span class="n">image</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	public void setImage(String image) {
-     	this.image = image;
- 	}
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setImage</span><span class="o">(</span><span class="n">String</span> <span class="n">image</span><span class="o">)</span> <span class="o">{</span>
+         <span class="k">this</span><span class="o">.</span><span class="na">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	public String getType() {
-     	return type;
- 	}
+     <span class="kd">public</span> <span class="n">String</span> <span class="nf">getType</span><span class="o">()</span> <span class="o">{</span>
+         <span class="k">return</span> <span class="n">type</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	public void setType(String type) {
-     	this.type = type;
- 	}
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setType</span><span class="o">(</span><span class="n">String</span> <span class="n">type</span><span class="o">)</span> <span class="o">{</span>
+         <span class="k">this</span><span class="o">.</span><span class="na">type</span> <span class="o">=</span> <span class="n">type</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	public String getSiteName() {
-     	return siteName;
-     }
+     <span class="kd">public</span> <span class="n">String</span> <span class="nf">getSiteName</span><span class="o">()</span> <span class="o">{</span>
+         <span class="k">return</span> <span class="n">siteName</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	public void setSiteName(String siteName) {
-     	this.siteName = siteName;
- 	}
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setSiteName</span><span class="o">(</span><span class="n">String</span> <span class="n">siteName</span><span class="o">)</span> <span class="o">{</span>
+         <span class="k">this</span><span class="o">.</span><span class="na">siteName</span> <span class="o">=</span> <span class="n">siteName</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	public String getTitle() {
-     	return title;
- 	}
+     <span class="kd">public</span> <span class="n">String</span> <span class="nf">getTitle</span><span class="o">()</span> <span class="o">{</span>
+         <span class="k">return</span> <span class="n">title</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	public void setTitle(String title) {
-     	this.title = title;
- 	}
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTitle</span><span class="o">(</span><span class="n">String</span> <span class="n">title</span><span class="o">)</span> <span class="o">{</span>
+         <span class="k">this</span><span class="o">.</span><span class="na">title</span> <span class="o">=</span> <span class="n">title</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	public String getLocale() {
-     	return locale;
- 	}
+     <span class="kd">public</span> <span class="n">String</span> <span class="nf">getLocale</span><span class="o">()</span> <span class="o">{</span>
+         <span class="k">return</span> <span class="n">locale</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	public void setLocale(String locale) {
-     	this.locale = locale;
- 	}
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setLocale</span><span class="o">(</span><span class="n">String</span> <span class="n">locale</span><span class="o">)</span> <span class="o">{</span>
+         <span class="k">this</span><span class="o">.</span><span class="na">locale</span> <span class="o">=</span> <span class="n">locale</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	public String getDescription() {
-     	return description;
- 	}
+     <span class="kd">public</span> <span class="n">String</span> <span class="nf">getDescription</span><span class="o">()</span> <span class="o">{</span>
+         <span class="k">return</span> <span class="n">description</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	public void setDescription(String description) {
-     	this.description = description;
- 	}
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDescription</span><span class="o">(</span><span class="n">String</span> <span class="n">description</span><span class="o">)</span> <span class="o">{</span>
+         <span class="k">this</span><span class="o">.</span><span class="na">description</span> <span class="o">=</span> <span class="n">description</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	public String getCreateDate() {
-     	return createDate;
- 	}
+     <span class="kd">public</span> <span class="n">String</span> <span class="nf">getCreateDate</span><span class="o">()</span> <span class="o">{</span>
+         <span class="k">return</span> <span class="n">createDate</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	public void setCreateDate(String createDate) {
-     	this.createDate = createDate;
- 	}
- }
+     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCreateDate</span><span class="o">(</span><span class="n">String</span> <span class="n">createDate</span><span class="o">)</span> <span class="o">{</span>
+         <span class="k">this</span><span class="o">.</span><span class="na">createDate</span> <span class="o">=</span> <span class="n">createDate</span><span class="o">;</span>
+     <span class="o">}</span>
+ <span class="o">}</span>
 </code></pre></div>    </div>
 
     <p>현재 날짜와 캐시 기간 비교를 위해 날짜 유틸 클래스를 추가한다.</p>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> import java.text.ParseException;
- import java.text.SimpleDateFormat;
- import java.util.Calendar;
- import java.util.Date;
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kn">import</span> <span class="nn">java.text.ParseException</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">java.text.SimpleDateFormat</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">java.util.Calendar</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">java.util.Date</span><span class="o">;</span>
 
- public class DateUtils {
-     private static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+ <span class="kd">public</span> <span class="kd">class</span> <span class="nc">DateUtils</span> <span class="o">{</span>
+     <span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">DATE_FORMAT</span> <span class="o">=</span> <span class="s">"yyyy-MM-dd HH:mm:ss"</span><span class="o">;</span>
 
- 	/**
-  	* 현재 날짜 구하기
-  	* @return
-  	*/
- 	public static String getCurrentDate() {
-     	SimpleDateFormat date = new SimpleDateFormat(DATE_FORMAT);
+     <span class="cm">/**
+     * 현재 날짜 구하기
+     * @return
+     */</span>
+     <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">getCurrentDate</span><span class="o">()</span> <span class="o">{</span>
+         <span class="n">SimpleDateFormat</span> <span class="n">date</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="o">(</span><span class="n">DATE_FORMAT</span><span class="o">);</span>
 
-     	Calendar cal = Calendar.getInstance();
-     	String currentDate = date.format(cal.getTime());
+         <span class="n">Calendar</span> <span class="n">cal</span> <span class="o">=</span> <span class="n">Calendar</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+         <span class="n">String</span> <span class="n">currentDate</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">cal</span><span class="o">.</span><span class="na">getTime</span><span class="o">());</span>
 
-     	return currentDate;
- 	}
+         <span class="k">return</span> <span class="n">currentDate</span><span class="o">;</span>
+     <span class="o">}</span>
 
- 	/**
-  	* 날짜 비교
-  	* @param date
-  	* @return
-  	*/
- 	public static long getDiffDate(String date)
- 	{
-     	long diffDays = 0L;
+     <span class="cm">/**
+     * 날짜 비교
+     * @param date
+     * @return
+     */</span>
+     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">long</span> <span class="nf">getDiffDate</span><span class="o">(</span><span class="n">String</span> <span class="n">date</span><span class="o">)</span>
+     <span class="o">{</span>
+         <span class="kt">long</span> <span class="n">diffDays</span> <span class="o">=</span> <span class="mi">0L</span><span class="o">;</span>
 
-     	try{
-         	SimpleDateFormat format = new SimpleDateFormat( DATE_FORMAT);
+         <span class="k">try</span><span class="o">{</span>
+             <span class="n">SimpleDateFormat</span> <span class="n">format</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="o">(</span> <span class="n">DATE_FORMAT</span><span class="o">);</span>
 
-         	Date FirstDate = format.parse(date);
-         	Date SecondDate = format.parse(getCurrentDate());
+             <span class="n">Date</span> <span class="n">FirstDate</span> <span class="o">=</span> <span class="n">format</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">date</span><span class="o">);</span>
+             <span class="n">Date</span> <span class="n">SecondDate</span> <span class="o">=</span> <span class="n">format</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">getCurrentDate</span><span class="o">());</span>
 
-         	long diffDate = FirstDate.getTime() - SecondDate.getTime();
-         	long diffDateDays = diffDate / ( 24*60*60*1000);
+             <span class="kt">long</span> <span class="n">diffDate</span> <span class="o">=</span> <span class="n">FirstDate</span><span class="o">.</span><span class="na">getTime</span><span class="o">()</span> <span class="o">-</span> <span class="n">SecondDate</span><span class="o">.</span><span class="na">getTime</span><span class="o">();</span>
+             <span class="kt">long</span> <span class="n">diffDateDays</span> <span class="o">=</span> <span class="n">diffDate</span> <span class="o">/</span> <span class="o">(</span> <span class="mi">24</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">1000</span><span class="o">);</span>
 
-         	diffDays = Math.abs(diffDateDays);
-     	} catch(ParseException e) {
-             e.printStackTrace();
-  	   }
+             <span class="n">diffDays</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">diffDateDays</span><span class="o">);</span>
+         <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">ParseException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+             <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
 
-     	return diffDays;
- 	}
- }
+         <span class="k">return</span> <span class="n">diffDays</span><span class="o">;</span>
+     <span class="o">}</span>
+ <span class="o">}</span>
 </code></pre></div>    </div>
 
     <p>Open Graph 파싱을 위한 클래스를 추가한다.</p>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> import org.jsoup.Jsoup;
- import org.jsoup.nodes.Document;
- import org.jsoup.nodes.Element;
- import org.jsoup.select.Elements;
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kn">import</span> <span class="nn">org.jsoup.Jsoup</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.jsoup.nodes.Document</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.jsoup.nodes.Element</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">org.jsoup.select.Elements</span><span class="o">;</span>
 
- import java.util.ArrayList;
- import java.util.Arrays;
- import java.util.HashMap;
- import java.util.List;
- import java.util.Map;
+ <span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">java.util.Map</span><span class="o">;</span>
 
- public class OpenGraphParser {
-     public OpenGraphParser() {
- 	}
+ <span class="kd">public</span> <span class="kd">class</span> <span class="nc">OpenGraphParser</span> <span class="o">{</span>
+     <span class="kd">public</span> <span class="nf">OpenGraphParser</span><span class="o">()</span> <span class="o">{</span>
+     <span class="o">}</span>
 
- 	public OpenGraphTag parser(String url) {
- 		OpenGraphTag tag = new OpenGraphTag();
-         Map&lt;String, List&lt;String&gt;&gt; result = new HashMap&lt;String,List&lt;String&gt;&gt;();
- 	    String[] metas = new String[]{"og:title", "og:type", "og:image", "og:url", "og:description" };
+     <span class="kd">public</span> <span class="n">OpenGraphTag</span> <span class="nf">parser</span><span class="o">(</span><span class="n">String</span> <span class="n">url</span><span class="o">)</span> <span class="o">{</span>
+         <span class="n">OpenGraphTag</span> <span class="n">tag</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OpenGraphTag</span><span class="o">();</span>
+         <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;&gt;();</span>
+         <span class="n">String</span><span class="o">[]</span> <span class="n">metas</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">"og:title"</span><span class="o">,</span> <span class="s">"og:type"</span><span class="o">,</span> <span class="s">"og:image"</span><span class="o">,</span> <span class="s">"og:url"</span><span class="o">,</span> <span class="s">"og:description"</span> <span class="o">};</span>
 
-     	try {
-         	Document doc = Jsoup
-                 .connect(url)
-                 .get();
+         <span class="k">try</span> <span class="o">{</span>
+             <span class="n">Document</span> <span class="n">doc</span> <span class="o">=</span> <span class="n">Jsoup</span>
+                 <span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">url</span><span class="o">)</span>
+                 <span class="o">.</span><span class="na">get</span><span class="o">();</span>
 
-         	Elements elements = doc.select("meta[property^=og], meta[name^=og]");
+             <span class="n">Elements</span> <span class="n">elements</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="na">select</span><span class="o">(</span><span class="s">"meta[property^=og], meta[name^=og]"</span><span class="o">);</span>
 
-         	for (Element elm : elements) {
-                 String target= elm.hasAttr("property") ? "property" : "name";
+             <span class="k">for</span> <span class="o">(</span><span class="n">Element</span> <span class="n">elm</span> <span class="o">:</span> <span class="n">elements</span><span class="o">)</span> <span class="o">{</span>
+                 <span class="n">String</span> <span class="n">target</span><span class="o">=</span> <span class="n">elm</span><span class="o">.</span><span class="na">hasAttr</span><span class="o">(</span><span class="s">"property"</span><span class="o">)</span> <span class="o">?</span> <span class="s">"property"</span> <span class="o">:</span> <span class="s">"name"</span><span class="o">;</span>
 
- 	            if(!result.containsKey(elm.attr(target))){
-     	            result.put(elm.attr(target), new ArrayList&lt;String&gt;());
-         	    }
+                 <span class="k">if</span><span class="o">(!</span><span class="n">result</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">elm</span><span class="o">.</span><span class="na">attr</span><span class="o">(</span><span class="n">target</span><span class="o">))){</span>
+                     <span class="n">result</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">elm</span><span class="o">.</span><span class="na">attr</span><span class="o">(</span><span class="n">target</span><span class="o">),</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;());</span>
+                 <span class="o">}</span>
 
-             	result.get(elm.attr(target)).add(elm.attr("content"));
-         	}
+                 <span class="n">result</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">elm</span><span class="o">.</span><span class="na">attr</span><span class="o">(</span><span class="n">target</span><span class="o">)).</span><span class="na">add</span><span class="o">(</span><span class="n">elm</span><span class="o">.</span><span class="na">attr</span><span class="o">(</span><span class="s">"content"</span><span class="o">));</span>
+             <span class="o">}</span>
 
-             // Open Graph 태그가 없는 경우 meta 태그와 본문에서 추출
-         	for(String meta : metas){
-             	if (!(result.containsKey(meta) &amp;&amp; result.get(meta).size() &gt; 0)){
-                 	if(meta.equals(metas[0])){
-                     	result.put(metas[0]
-                             , Arrays.asList(new String[]{doc.select("title").eq(0).text()}));
-                 	} else if (meta.equals(metas[1])){
-                     	result.put(metas[1]
-                             , Arrays.asList(new String[]{"website"}));
-                 	} else if (meta.equals(metas[2])){
-                         result.put(metas[2]
-                             , Arrays.asList(new String[]{doc.select("img").eq(0).attr("abs:src")}));
- 	                } else if (meta.equals(metas[3])){
-     	                result.put(metas[3]
-         	                    , Arrays.asList(new String[]{doc.baseUri()}));
-             	    } else if (meta.equals(metas[4])){
-                 	    result.put(metas[4]
-                             , Arrays.asList(new String[]{doc.select("meta[property=description], meta[name=description]").eq(0).attr("content")}));
-                 	}
-             	}
-         	}
+             <span class="c1">// Open Graph 태그가 없는 경우 meta 태그와 본문에서 추출</span>
+             <span class="k">for</span><span class="o">(</span><span class="n">String</span> <span class="n">meta</span> <span class="o">:</span> <span class="n">metas</span><span class="o">){</span>
+                 <span class="k">if</span> <span class="o">(!(</span><span class="n">result</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">meta</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">result</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">meta</span><span class="o">).</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)){</span>
+                     <span class="k">if</span><span class="o">(</span><span class="n">meta</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">metas</span><span class="o">[</span><span class="mi">0</span><span class="o">])){</span>
+                         <span class="n">result</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">metas</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
+                             <span class="o">,</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="n">doc</span><span class="o">.</span><span class="na">select</span><span class="o">(</span><span class="s">"title"</span><span class="o">).</span><span class="na">eq</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">text</span><span class="o">()}));</span>
+                     <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">meta</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">metas</span><span class="o">[</span><span class="mi">1</span><span class="o">])){</span>
+                         <span class="n">result</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">metas</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span>
+                             <span class="o">,</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">"website"</span><span class="o">}));</span>
+                     <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">meta</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">metas</span><span class="o">[</span><span class="mi">2</span><span class="o">])){</span>
+                         <span class="n">result</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">metas</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span>
+                             <span class="o">,</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="n">doc</span><span class="o">.</span><span class="na">select</span><span class="o">(</span><span class="s">"img"</span><span class="o">).</span><span class="na">eq</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">attr</span><span class="o">(</span><span class="s">"abs:src"</span><span class="o">)}));</span>
+                     <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">meta</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">metas</span><span class="o">[</span><span class="mi">3</span><span class="o">])){</span>
+                         <span class="n">result</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">metas</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span>
+                                 <span class="o">,</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="n">doc</span><span class="o">.</span><span class="na">baseUri</span><span class="o">()}));</span>
+                     <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">meta</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">metas</span><span class="o">[</span><span class="mi">4</span><span class="o">])){</span>
+                         <span class="n">result</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">metas</span><span class="o">[</span><span class="mi">4</span><span class="o">]</span>
+                             <span class="o">,</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="n">doc</span><span class="o">.</span><span class="na">select</span><span class="o">(</span><span class="s">"meta[property=description], 
+                             meta[name=description]"</span><span class="o">).</span><span class="na">eq</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">attr</span><span class="o">(</span><span class="s">"content"</span><span class="o">)}));</span>
+                     <span class="o">}</span>
+                 <span class="o">}</span>
+             <span class="o">}</span>
 
-         	for(String meta : result.keySet()) {
-             	if(meta.equals(metas[0])){
-                 	tag.setTitle(result.get(meta).get(0));
-             	} else if (meta.equals(metas[1])){
-                     tag.setType(result.get(meta).get(0));
- 	            } else if (meta.equals(metas[2])){
-     	            tag.setImage(result.get(meta).get(0));
-         	    } else if (meta.equals(metas[3])){
-             	    tag.setUrl(result.get(meta).get(0));
-             	} else if (meta.equals(metas[4])){
-                 	tag.setDescription(result.get(meta).get(0));
-             	}
-         	}
+             <span class="k">for</span><span class="o">(</span><span class="n">String</span> <span class="n">meta</span> <span class="o">:</span> <span class="n">result</span><span class="o">.</span><span class="na">keySet</span><span class="o">())</span> <span class="o">{</span>
+                 <span class="k">if</span><span class="o">(</span><span class="n">meta</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">metas</span><span class="o">[</span><span class="mi">0</span><span class="o">])){</span>
+                     <span class="n">tag</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">meta</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">));</span>
+                 <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">meta</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">metas</span><span class="o">[</span><span class="mi">1</span><span class="o">])){</span>
+                     <span class="n">tag</span><span class="o">.</span><span class="na">setType</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">meta</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">));</span>
+                 <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">meta</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">metas</span><span class="o">[</span><span class="mi">2</span><span class="o">])){</span>
+                     <span class="n">tag</span><span class="o">.</span><span class="na">setImage</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">meta</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">));</span>
+                 <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">meta</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">metas</span><span class="o">[</span><span class="mi">3</span><span class="o">])){</span>
+                     <span class="n">tag</span><span class="o">.</span><span class="na">setUrl</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">meta</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">));</span>
+                 <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">meta</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">metas</span><span class="o">[</span><span class="mi">4</span><span class="o">])){</span>
+                     <span class="n">tag</span><span class="o">.</span><span class="na">setDescription</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">meta</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">));</span>
+                 <span class="o">}</span>
+             <span class="o">}</span>
 
-         	tag.setCreateDate(DateUtils.getCurrentDate());
-     	} catch (Exception e){
-             e.printStackTrace();
-         }
+             <span class="n">tag</span><span class="o">.</span><span class="na">setCreateDate</span><span class="o">(</span><span class="n">DateUtils</span><span class="o">.</span><span class="na">getCurrentDate</span><span class="o">());</span>
+         <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span>
+             <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+         <span class="o">}</span>
 
- 	    return tag;
- 	}
- }
+         <span class="k">return</span> <span class="n">tag</span><span class="o">;</span>
+     <span class="o">}</span>
+ <span class="o">}</span>
 </code></pre></div>    </div>
 
     <p>interceptPacket 메소드에 Open Graph 파싱 코드를 추가한다.</p>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @Override
- public void interceptPacket(Packet packet, Session session, boolean incoming, boolean processed)
-                 throws PacketRejectedException {
- 	if(isValidTargetPacket(packet,incoming,processed)) {
-     	Packet original = packet;               
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nd">@Override</span>
+ <span class="kd">public</span> <span class="kt">void</span> <span class="nf">interceptPacket</span><span class="o">(</span><span class="n">Packet</span> <span class="n">packet</span><span class="o">,</span> <span class="n">Session</span> <span class="n">session</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">incoming</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">processed</span><span class="o">)</span>
+                 <span class="kd">throws</span> <span class="n">PacketRejectedException</span> <span class="o">{</span>
+     <span class="k">if</span><span class="o">(</span><span class="n">isValidTargetPacket</span><span class="o">(</span><span class="n">packet</span><span class="o">,</span><span class="n">incoming</span><span class="o">,</span><span class="n">processed</span><span class="o">))</span> <span class="o">{</span>
+         <span class="n">Packet</span> <span class="n">original</span> <span class="o">=</span> <span class="n">packet</span><span class="o">;</span>               
                                       
-     	if(original instanceof Message) {
-         	Message receivedMessage = (Message)original;
-         	String url = receivedMessage.getBody();
+         <span class="k">if</span><span class="o">(</span><span class="n">original</span> <span class="k">instanceof</span> <span class="n">Message</span><span class="o">)</span> <span class="o">{</span>
+             <span class="n">Message</span> <span class="n">receivedMessage</span> <span class="o">=</span> <span class="o">(</span><span class="n">Message</span><span class="o">)</span><span class="n">original</span><span class="o">;</span>
+             <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">receivedMessage</span><span class="o">.</span><span class="na">getBody</span><span class="o">();</span>
             
-             if (isUrl(url)) {
- 	            if (url.indexOf("http") &lt; 0 &amp;&amp; url.indexOf("https") &lt; 0) {
-     	            url = "http://" + url;
-         	    }
+             <span class="k">if</span> <span class="o">(</span><span class="n">isUrl</span><span class="o">(</span><span class="n">url</span><span class="o">))</span> <span class="o">{</span>
+                 <span class="k">if</span> <span class="o">(</span><span class="n">url</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">"http"</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">url</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">"https"</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                     <span class="n">url</span> <span class="o">=</span> <span class="s">"http://"</span> <span class="o">+</span> <span class="n">url</span><span class="o">;</span>
+                 <span class="o">}</span>
                           
-                 // 캐시 저장 확인
-             	OpenGraphTag tag = map.get(url);
+                 <span class="c1">// 캐시 저장 확인</span>
+                 <span class="n">OpenGraphTag</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
         
-     			/ 캐시에 저장이 안되어 있거나 캐시 저장 기간을 초과한 경우 Open Graph 를 파싱 요청한다.
-             	if (tag == null || (MAX_CACHE_DATE &lt; DateUtils.getDiffDate(tag.getCreateDate()))) {
-                 	OpenGraphParser parser = new OpenGraphParser();
-                 	tag = parser.parser(url);
-                 	map.put(url, tag);
-             	}                          
-         	}
-     	}            
- 	}      
- }
+                 <span class="o">/</span> <span class="err">캐시에</span> <span class="err">저장이</span> <span class="err">안되어</span> <span class="err">있거나</span> <span class="err">캐시</span> <span class="err">저장</span> <span class="err">기간을</span> <span class="err">초과한</span> <span class="err">경우</span> <span class="n">Open</span> <span class="n">Graph</span> <span class="err">를</span> <span class="err">파싱</span> <span class="err">요청한다</span><span class="o">.</span>
+                 <span class="k">if</span> <span class="o">(</span><span class="n">tag</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="o">(</span><span class="n">MAX_CACHE_DATE</span> <span class="o">&lt;</span> <span class="n">DateUtils</span><span class="o">.</span><span class="na">getDiffDate</span><span class="o">(</span><span class="n">tag</span><span class="o">.</span><span class="na">getCreateDate</span><span class="o">())))</span> <span class="o">{</span>
+                     <span class="n">OpenGraphParser</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OpenGraphParser</span><span class="o">();</span>
+                     <span class="n">tag</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="na">parser</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
+                     <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">tag</span><span class="o">);</span>
+                 <span class="o">}</span>                          
+             <span class="o">}</span>
+         <span class="o">}</span>            
+     <span class="o">}</span>      
+ <span class="o">}</span>
 </code></pre></div>    </div>
   </li>
   <li>
     <p>패킷에 append 해서 브로드캐스팅 한다.
 가로채기한 패킷에 “<x xmlns="jabber:x:og"></x>” 엘리멘트를 추가하고, 하위에 “title, image, url, description” 추가한다.</p>
 
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>private long MAX_CACHE_DATE = 1L;
-private Map&lt;String, OpenGraphTag&gt; map = new ConcurrentHashMap&lt;String, OpenGraphTag&gt;();
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kt">long</span> <span class="n">MAX_CACHE_DATE</span> <span class="o">=</span> <span class="mi">1L</span><span class="o">;</span>
+<span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">OpenGraphTag</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ConcurrentHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">OpenGraphTag</span><span class="o">&gt;();</span>
     
-@Override
-public void interceptPacket(Packet packet, Session session, boolean incoming, boolean processed)
-        throws PacketRejectedException {
+<span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">interceptPacket</span><span class="o">(</span><span class="n">Packet</span> <span class="n">packet</span><span class="o">,</span> <span class="n">Session</span> <span class="n">session</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">incoming</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">processed</span><span class="o">)</span>
+        <span class="kd">throws</span> <span class="n">PacketRejectedException</span> <span class="o">{</span>
 
-    if(isValidTargetPacket(packet,incoming,processed)) {
-        Packet original = packet;			
-						
-        if(original instanceof Message) {
-            Message receivedMessage = (Message)original;
-				
-            String url = receivedMessage.getBody();
+    <span class="k">if</span><span class="o">(</span><span class="n">isValidTargetPacket</span><span class="o">(</span><span class="n">packet</span><span class="o">,</span><span class="n">incoming</span><span class="o">,</span><span class="n">processed</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">Packet</span> <span class="n">original</span> <span class="o">=</span> <span class="n">packet</span><span class="o">;</span>           
+                        
+        <span class="k">if</span><span class="o">(</span><span class="n">original</span> <span class="k">instanceof</span> <span class="n">Message</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Message</span> <span class="n">receivedMessage</span> <span class="o">=</span> <span class="o">(</span><span class="n">Message</span><span class="o">)</span><span class="n">original</span><span class="o">;</span>
+                
+            <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">receivedMessage</span><span class="o">.</span><span class="na">getBody</span><span class="o">();</span>
 
-            if (isUrl(url)) {
-            	if (url.indexOf("http") &lt; 0 &amp;&amp; url.indexOf("https") &lt; 0) {
-            		url = "http://" + url;
-            	}
-		        	
-            	OpenGraphTag tag = map.get(url);
+            <span class="k">if</span> <span class="o">(</span><span class="n">isUrl</span><span class="o">(</span><span class="n">url</span><span class="o">))</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">url</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">"http"</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">url</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">"https"</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">url</span> <span class="o">=</span> <span class="s">"http://"</span> <span class="o">+</span> <span class="n">url</span><span class="o">;</span>
+                <span class="o">}</span>
+                    
+                <span class="n">OpenGraphTag</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
 
-                if (tag == null || (MAX_CACHE_DATE &lt; DateUtils.getDiffDate(tag.getCreateDate()))) {
-                    OpenGraphParser parser = new OpenGraphParser();
-                    tag = parser.parser(url);
-                    map.put(url, tag);
-                }
-			        				
-                // 가로채기한 패킷에 Open Graph 정보 추가
-                Element sendFileElement = receivedMessage.addChildElement("x", "jabber:x:og");
-                sendFileElement.addElement("title").setText(tag.getTitle());
-                sendFileElement.addElement("image").setText(tag.getImage());
-                sendFileElement.addElement("url").setText(tag.getUrl());
-                sendFileElement.addElement("description").setText(tag.getDescription());	
-            }
-        }		
-    }	
-}
+                <span class="k">if</span> <span class="o">(</span><span class="n">tag</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="o">(</span><span class="n">MAX_CACHE_DATE</span> <span class="o">&lt;</span> <span class="n">DateUtils</span><span class="o">.</span><span class="na">getDiffDate</span><span class="o">(</span><span class="n">tag</span><span class="o">.</span><span class="na">getCreateDate</span><span class="o">())))</span> <span class="o">{</span>
+                    <span class="n">OpenGraphParser</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OpenGraphParser</span><span class="o">();</span>
+                    <span class="n">tag</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="na">parser</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
+                    <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">tag</span><span class="o">);</span>
+                <span class="o">}</span>
+                                    
+                <span class="c1">// 가로채기한 패킷에 Open Graph 정보 추가</span>
+                <span class="n">Element</span> <span class="n">sendFileElement</span> <span class="o">=</span> <span class="n">receivedMessage</span><span class="o">.</span><span class="na">addChildElement</span><span class="o">(</span><span class="s">"x"</span><span class="o">,</span> <span class="s">"jabber:x:og"</span><span class="o">);</span>
+                <span class="n">sendFileElement</span><span class="o">.</span><span class="na">addElement</span><span class="o">(</span><span class="s">"title"</span><span class="o">).</span><span class="na">setText</span><span class="o">(</span><span class="n">tag</span><span class="o">.</span><span class="na">getTitle</span><span class="o">());</span>
+                <span class="n">sendFileElement</span><span class="o">.</span><span class="na">addElement</span><span class="o">(</span><span class="s">"image"</span><span class="o">).</span><span class="na">setText</span><span class="o">(</span><span class="n">tag</span><span class="o">.</span><span class="na">getImage</span><span class="o">());</span>
+                <span class="n">sendFileElement</span><span class="o">.</span><span class="na">addElement</span><span class="o">(</span><span class="s">"url"</span><span class="o">).</span><span class="na">setText</span><span class="o">(</span><span class="n">tag</span><span class="o">.</span><span class="na">getUrl</span><span class="o">());</span>
+                <span class="n">sendFileElement</span><span class="o">.</span><span class="na">addElement</span><span class="o">(</span><span class="s">"description"</span><span class="o">).</span><span class="na">setText</span><span class="o">(</span><span class="n">tag</span><span class="o">.</span><span class="na">getDescription</span><span class="o">());</span>    
+            <span class="o">}</span>
+        <span class="o">}</span>       
+    <span class="o">}</span>   
+<span class="o">}</span>
 </code></pre></div>    </div>
 
-    <p>URL에 Open Graph 정보가 있거나, Meta 정보가 있는 경우에는 클라이언트에 아래와 비슷한 패킷을 받을 것이다. 클라이언트에서는 전달받은 패킷에서 “<x xmlns="jabber:x:og"></x>” 엘리먼트를 파싱해서 UI에 사용하면 된다.</p>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;message xmlns="jabber:client" to="user01@localhost/56pmeoc6xd" from="room1@conference.localhost/user01" type="groupchat" id="4"&gt;
+    <p>URL에 Open Graph 정보가 있거나, Meta 정보가 있는 경우에는 클라이언트에 아래와 비슷한 패킷을 받을 것이다. 클라이언트에서는 전달받은 
+패킷에서 “<x xmlns="jabber:x:og"></x>” 엘리먼트를 파싱해서 UI에 사용하면 된다.</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;message xmlns="jabber:client" to="user01@localhost/56pmeoc6xd" from="room1@conference.localhost/user01" 
+type="groupchat" id="4"&gt;
     &lt;body&gt;https://github.com&lt;/body&gt;
     &lt;x xmlns="jabber:x:event"&gt;
         &lt;composing/&gt;
@@ -656,14 +665,16 @@ public void interceptPacket(Packet packet, Session session, boolean incoming, bo
         &lt;title&gt;Build software better, together&lt;/title&gt;
         &lt;image&gt;https://assets-cdn.github.com/images/modules/open_graph/github-logo.png&lt;/image&gt;
         &lt;url&gt;https://github.com&lt;/url&gt;
-        &lt;description&gt;GitHub is where people build software. More than 27 million people use GitHub to discover, fork, and contribute to over 80 million projects.&lt;/description&gt;
+        &lt;description&gt;GitHub is where people build software. More than 27 million people use GitHub 
+            to discover, fork, and contribute to over 80 million projects.&lt;/description&gt;
     &lt;/x&gt;
     &lt;data xmlns="jabber:x:data" from="user@localhost" roomID="8" stamp="2018-04-20T00:51:22.939Z"/&gt;
 &lt;/message&gt;
 </code></pre></div>    </div>
   </li>
   <li>Ant로 빌드한다.
-openfire &gt; build &gt; build.xml 파일을 마우스 오른쪽으로 클릭 후 Run As &gt; External Tools Configurations &gt; Targets 에서 openfire 와 plugins 를 체크한다. 그리고, “Run” 버튼을 클릭해서 빌드를 한다.
+openfire &gt; build &gt; build.xml 파일을 마우스 오른쪽으로 클릭 후 Run As &gt; External Tools Configurations &gt; 
+Targets 에서 openfire 와 plugins 를 체크한다. 그리고, “Run” 버튼을 클릭해서 빌드를 한다.
 빌드가 성공적으로 끝나면 /Openfire/target/openfire/plugins 폴더에서 opengraphe.jar 파일을 확인 할 수 있다.</li>
 </ol>
 
