@@ -11,7 +11,7 @@
 
 
 
-    <title>Welcome to Ghost</title>
+    <title>Ionic3로  XMPP 멀티 채팅 구현</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Styles'n'Scripts -->
@@ -25,34 +25,28 @@
     <!-- This tag outputs SEO meta+structured data and other important settings -->
     <meta name="description" content="Development & Technical Training" />
     <link rel="shortcut icon" href="http://localhost:4000/assets/images/favicon.png" type="image/png" />
-    <link rel="canonical" href="http://localhost:4000/welcome" />
+    <link rel="canonical" href="http://localhost:4000/Ionic3-xmpp" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
 
      <!--title below is coming from _includes/dynamic_title-->
     <meta property="og:site_name" content="IT Blog" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Welcome to Ghost" />
-    <meta property="og:description" content="Hey! Welcome to Ghost, it’s great to have you :) We know that first impressions are important, so we’ve populated your new site with some initial Getting Started posts that will help you get familiar with everything in no time. This is the first one! There are a few things" />
-    <meta property="og:url" content="http://localhost:4000/welcome" />
-    <meta property="og:image" content="http://localhost:4000/assets/images/welcome.jpg" />
+    <meta property="og:title" content="Ionic3로  XMPP 멀티 채팅 구현" />
+    <meta property="og:description" content="Development & Technical Training" />
+    <meta property="og:url" content="http://localhost:4000/Ionic3-xmpp" />
+    <meta property="og:image" content="http://localhost:4000/assets/images/blog-cover.jpg" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
-    <meta property="article:author" content="https://www.facebook.com/" />
-    <meta property="article:published_time" content="2017-07-27T19:00:00+09:00" />
-    <meta property="article:modified_time" content="2017-07-27T19:00:00+09:00" />
-    <meta property="article:tag" content="Getting Started" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Welcome to Ghost" />
-    <meta name="twitter:description" content="Hey! Welcome to Ghost, it’s great to have you :) We know that first impressions are important, so we’ve populated your new site with some initial Getting Started posts that will help you get familiar with everything in no time. This is the first one! There are a few things" />
+    <meta name="twitter:title" content="Ionic3로  XMPP 멀티 채팅 구현" />
+    <meta name="twitter:description" content="Development & Technical Training" />
     <meta name="twitter:url" content="http://localhost:4000/" />
-    <meta name="twitter:image" content="http://localhost:4000/assets/images/welcome.jpg" />
+    <meta name="twitter:image" content="http://localhost:4000/assets/images/blog-cover.jpg" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="IT Blog" />
-    <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="Getting Started" />
     <meta name="twitter:site" content="@" />
     <meta name="twitter:creator" content="@" />
-    <meta property="og:image:width" content="1400" />
-    <meta property="og:image:height" content="933" />
+    <meta property="og:image:width" content="2000" />
+    <meta property="og:image:height" content="666" />
 
     <script type="application/ld+json">
 {
@@ -63,18 +57,18 @@
         "name": "IT Blog",
         "logo": "http://localhost:4000/assets/images/blog-icon.png"
     },
-    "url": "http://localhost:4000/welcome",
+    "url": "http://localhost:4000/Ionic3-xmpp",
     "image": {
         "@type": "ImageObject",
-        "url": "http://localhost:4000/assets/images/welcome.jpg",
+        "url": "http://localhost:4000/assets/images/blog-cover.jpg",
         "width": 2000,
         "height": 666
     },
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "http://localhost:4000/welcome"
+        "@id": "http://localhost:4000/Ionic3-xmpp"
     },
-    "description": "Hey! Welcome to Ghost, it’s great to have you :) We know that first impressions are important, so we’ve populated your new site with some initial Getting Started posts that will help you get familiar with everything in no time. This is the first one! There are a few things"
+    "description": "Development & Technical Training"
 }
     </script>
 
@@ -87,11 +81,11 @@
     </script> -->
 
     <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="Welcome to Ghost" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Ionic3로  XMPP 멀티 채팅 구현" href="/feed.xml" />
 
 
 </head>
-<body class="post-template">
+<body class="home-template">
 
     <div class="site-wrapper">
         <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
@@ -109,14 +103,6 @@ into the {body} of the default.hbs template -->
                 <a class="site-nav-logo" href="http://localhost:4000/"><img src="/assets/images/blog-icon.png" alt="IT Blog" /></a>
             
         
-        
-            <ul class="nav" role="menu">
-    <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
-    <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
-    <li class="nav-getting-started" role="menuitem"><a href="/tag/getting-started/">Getting Started</a></li>
-    <li class="nav-try-ghost" role="menuitem"><a href="https://ghost.org">Try Ghost</a></li>
-</ul>
-
         
     </div>
     <div class="site-nav-right">
@@ -139,46 +125,184 @@ into the {body} of the default.hbs template -->
 <main id="site-main" class="site-main outer" role="main">
     <div class="inner">
 
-        <article class="post-full post tag-getting-started ">
+        <article class="post-full  no-image">
 
             <header class="post-full-header">
                 <section class="post-full-meta">
-                    <time class="post-full-meta-date" datetime="27 July 2017">27 July 2017</time>
-                    
-                        <span class="date-divider">/</span>
-                        
-                            
-                               <a href='/tag/getting-started/'>GETTING STARTED</a>
-                            
-                        
+                    <time class="post-full-meta-date" datetime=" 1 March 2018"> 1 March 2018</time>
                     
                 </section>
-                <h1 class="post-full-title">Welcome to Ghost</h1>
+                <h1 class="post-full-title">Ionic3로  XMPP 멀티 채팅 구현</h1>
             </header>
 
-            
-            <figure class="post-full-image" style="background-image: url(/assets/images/welcome.jpg)">
-            </figure>
             
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <p>Hey! Welcome to Ghost, it’s great to have you :)</p>
+                    <p>멀티 채팅 서버를 구현하기 위해 많이 찾아본 결과 오래전부터 사용해 왔고, 여전히 많이 사용중인
+XMPP 프로토콜을 사용하는게 좋다고 생각을 했다.</p>
 
-<p>We know that first impressions are important, so we’ve populated your new site with some initial <strong>Getting Started</strong> posts that will help you get familiar with everything in no time. This is the first one!</p>
+<p>XMPP 프로토콜을 사용하는 오픈소스에는 ejabberd 와 Openfire가 있는데, 익숙한 언어인 자바로 개발된 Openfire를 선택했다.
+Openfire와 현재 많이 사용되고 있는 메신저들과는 개념적으로 다른 부분이 있어서, 일부 기능에서는 커스텀이 필요했다.</p>
 
-<h3 id="there-are-a-few-things-that-you-should-know-up-front">There are a few things that you should know up-front:</h3>
+<p>이 포스팅에서는 커스텀 내용 보다는 서버 설치와 클라이언트의 기본 사용법을 설명을 하려고 한다.</p>
+
+<h2 id="openfire-설치">Openfire 설치</h2>
+
 <ol>
-  <li>Ghost is designed for ambitious, professional publishers who want to actively build a business around their content. That’s who it works best for. If you’re using Ghost for some other purpose, that’s fine too - but it might not be the best choice for you.</li>
-  <li>The entire platform can be modified and customized to suit your needs, which is very powerful, but doing so <strong>does</strong> require some knowledge of code. Ghost is not necessarily a good platform for beginners or people who just want a simple personal blog.</li>
-  <li>For the best experience we recommend downloading the Ghost Desktop App for your computer, which is the best way to access your Ghost site on a desktop device.</li>
+  <li>
+    <p>설치 파일을 <strong><a href="https://www.igniterealtime.org/downloads/">다운로드</a></strong> 받는다.</p>
+  </li>
+  <li>
+    <p>다운로드 받은 설치 파일을 실행 한다.</p>
+  </li>
+  <li>
+    <p>설치 <strong>언어</strong> 설정을 한다.<br />
+<img src="/images/ionic3-xmpp/install_language.png" alt="install_language" /></p>
+  </li>
+  <li>
+    <p>라이선스에 동의를 한다.
+<img src="/images/ionic3-xmpp/license.png" alt="license" /></p>
+  </li>
+  <li>
+    <p>설치 경로를 입력한다.
+<img src="/images/ionic3-xmpp/install_path.png" alt="install_path" /></p>
+  </li>
+  <li>
+    <p>시작 메뉴와 바탕화면 바로가기를 설정 한다.
+<img src="/images/ionic3-xmpp/start_menu.png" alt="start_menu" /></p>
+  </li>
+  <li>
+    <p>Openfire 서버 서비스를 실행 한다. <strong>Finish</strong> 버튼을 클릭 하면 설정 화면으로 실행 된다.
+<img src="/images/ionic3-xmpp/start_service.png" alt="start_service" /></p>
+  </li>
 </ol>
 
-<p>Ghost is made by an independent non-profit organisation called the Ghost Foundation. We are 100% self funded by revenue from our <a href="https://ghost.org/pricing">Ghost(Pro)</a> service, and every penny we make is re-invested into funding further development of free, open source technology for modern journalism.</p>
+<hr />
 
-<p>The main thing you’ll want to read about next is probably: <a href="https://demo.ghost.io/the-editor/">the Ghost editor</a>.</p>
+<h2 id="openfire-설정">Openfire 설정</h2>
+<ol>
+  <li>
+    <p>Admin Console에서 사용할 <strong>언어</strong>를 선택 한다.
+<img src="/images/ionic3-xmpp/config_language.png" alt="config_language" /></p>
+  </li>
+  <li>
+    <p>서버의 <strong>Domain Name</strong> 과 <strong>FQDN</strong> 을 입력 한다.
+<img src="/images/ionic3-xmpp/config_setup_complete.png" alt="config_setup_complete" /></p>
+  </li>
+  <li>
+    <p>데이터베이스를 설정 한다.(별도의 데이터베이스를 사용하려면 <strong>“Standard Database Connection”</strong> 을 선택하면 되는데, 사전에 <strong>데이터베이스</strong>와 <strong>계정</strong>이 준비되어 있어야 한다.)
+<img src="/images/ionic3-xmpp/config_database.png" alt="config_database" /></p>
+  </li>
+  <li>
+    <p>사용자 프로필을 설정 한다.
+<img src="/images/ionic3-xmpp/config_profile.png" alt="config_profile" /></p>
+  </li>
+  <li>
+    <p>관리자 계정을 설정 한다. (기본값은 <strong>admin</strong> 이다.)
+<img src="/images/ionic3-xmpp/config_admin.png" alt="config_admin" /></p>
+  </li>
+  <li>
+    <p><strong>“Login to the admin console”</strong> 버튼을 클릭해서 <strong>Admin Console</strong> 로 이동한다.
+<img src="/images/ionic3-xmpp/config_setup_complete.png" alt="config_setup_complete" /></p>
+  </li>
+</ol>
 
-<p>Once you’re done reading, you can simply delete the default <strong>Ghost</strong> user from your team to remove all of these introductory posts!</p>
+<hr />
+
+<h2 id="계정-생성">계정 생성</h2>
+<ol>
+  <li>
+    <p><strong><a href="http://localhost:9090">Admin Console</a></strong> 에 로그인 한다.
+<img src="/images/ionic3-xmpp/adminconsole_login.png" alt="adminconsole_login" /></p>
+  </li>
+  <li>
+    <p>“Users/Groups &gt; Users &gt;Create New User” 메뉴로 이동해서 계정을 생성 한다. (계정은 3개 이상 생성 한다.)
+<img src="/images/ionic3-xmpp/adminconsole_create_user.png" alt="adminconsole_create_user" /></p>
+  </li>
+</ol>
+
+<hr />
+<h2 id="클라이언트-설치">클라이언트 설치</h2>
+<ol>
+  <li><a href="https://git-scm.com/downloads">Git</a>을 설치 한다.</li>
+  <li>Github 에서 소스를 Clone 한다.
+    <ul>
+      <li>명령 프롬프트를 실행 해서 아래 명령어를 실행 한다.
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> git clone https://github.com/junglestory/xmpp-ionic3.git
+</code></pre></div>        </div>
+        <p><img src="/images/ionic3-xmpp/git_clone.png" alt="git_clone" /></p>
+      </li>
+    </ul>
+  </li>
+  <li><a href="https://nodejs.org/en/download/">Node.js</a>를 설치 한다.</li>
+  <li>명령 프롬프트를 새로 실행해서 소스 디렉토리로 이동 한다.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd xmpp-ionic3
+</code></pre></div>    </div>
+  </li>
+  <li>라이브러리를 업데이트 한다. (명령 프롬프트에서 아래 명령어를 실행 한다.)
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm update
+</code></pre></div>    </div>
+  </li>
+  <li>Cordova와 Ionic을 설치 한다. (명령 프롬프트에서 아래 명령어를 실행 한다.)
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install -g cordova ionic
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="클라이언트-실행">클라이언트 실행</h2>
+<ol>
+  <li>명령 프롬프트에서 <strong>ionic serve</strong> 를 입력 한다.
+    <ul>
+      <li>기본 브라우저로 클라이언트가 실행 된다.</li>
+      <li>URL은 http://localhost:9090 이다.</li>
+    </ul>
+  </li>
+  <li>로그인 한다.
+    <ul>
+      <li>Admin Console에서 생성한 계정을 입력 한다.</li>
+      <li>소유하고 있는 도메인을 설정한 경우 <strong>Host</strong>에 설정한 도메인을 입력 한다.
+ <img src="/images/ionic3-xmpp/client_login.png" alt="client_login" /></li>
+    </ul>
+  </li>
+  <li>대화방 목록
+    <ul>
+      <li><strong>Chats</strong> 메뉴를 클릭 한다.
+ <img src="/images/ionic3-xmpp/client_chats.png" alt="client_chats" /></li>
+    </ul>
+  </li>
+  <li>대화방 생성
+    <ul>
+      <li>대화방 목록 우측 상단 <strong>”+”</strong> 버튼을 클릭 한다.</li>
+      <li><strong>Create Room</strong> 에서 대화방 명을 입력 후 <strong>CREATE ROOM</strong> 버튼을 클릭 한다.
+ <img src="/images/ionic3-xmpp/client_create_room.png" alt="client_create_room" /></li>
+    </ul>
+  </li>
+  <li>대화방 참여
+    <ul>
+      <li>다른 계정으로 로그인 한다.</li>
+      <li><strong>Chats</strong> 메뉴를 클릭해서 대화방 목록으로 이동 한다.</li>
+      <li>대화방을 클릭 한다.
+ <img src="/images/ionic3-xmpp/client_room_list.png" alt="client_room_list" /></li>
+    </ul>
+  </li>
+  <li>대화 상대 초대
+    <ul>
+      <li>대화방 목록 우측 상단 초대 버튼을 클릭 한다.  <br />
+ <img src="/images/ionic3-xmpp/client_message2.png" alt="client_message2" /></li>
+      <li><strong>Invite</strong> 에서 계정(계정@도메인)을 입력 후 <strong>INVITE</strong> 버튼을 클릭 한다.  <br />
+ <img src="/images/ionic3-xmpp/client_invite.png" alt="client_invite" /></li>
+    </ul>
+  </li>
+  <li>로그 아웃
+    <ul>
+      <li><strong>Settings</strong> 메뉴로 이동해서 <strong>LOG OUT</strong> 버튼을 클릭 한다.
+ <img src="/images/ionic3-xmpp/client_logout.png" alt="client_logout" /></li>
+    </ul>
+  </li>
+</ol>
 
                 </div>
             </section>
@@ -205,21 +329,6 @@ into the {body} of the default.hbs template -->
                 <!-- Everything inside the #author tags pulls data from the author -->
                 <!-- #author-->
                 
-                    
-                        <section class="author-card">
-                            
-                                <img class="author-profile-image" src="/assets/images/ghost.png" alt="ghost" />
-                            
-                            <section class="author-card-content">
-                                <h4 class="author-card-name"><a href="/author/ghost">Ghost</a></h4>
-                                
-                                    <p>The professional publishing platform</p>
-                                
-                            </section>
-                        </section>
-                        <div class="post-full-footer-right">
-                            <a class="author-card-button" href="/author/ghost">Read More</a>
-                        </div>
                     
                 
                     
@@ -268,11 +377,6 @@ into the {body} of the default.hbs template -->
     <div class="inner">
         <div class="read-next-feed">
             
-                
-                
-                
-                
-            
 
             <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
             
@@ -280,14 +384,14 @@ into the {body} of the default.hbs template -->
     <article class="post-card  no-image">
         
         <div class="post-card-content">
-            <a class="post-card-content-link" href="/Ionic3-xmpp">
+            <a class="post-card-content-link" href="/tip-github">
                 <header class="post-card-header">
                     
 
-                    <h2 class="post-card-title">Ionic3로  XMPP 멀티 채팅 구현</h2>
+                    <h2 class="post-card-title">로컬 프로젝트를 Github에 등록 방법</h2>
                 </header>
                 <section class="post-card-excerpt">
-                    <p>멀티 채팅 서버를 구현하기 위해 많이 찾아본 결과 오래전부터 사용해 왔고, 여전히 많이 사용중인 XMPP 프로토콜을 사용하는게 좋다고 생각을 했다. XMPP 프로토콜을 사용하는 오픈소스에는 ejabberd 와 Openfire가 있는데, 익숙한 언어인 자바로 개발된 Openfire를</p>
+                    <p>Github을 사용해서 프로젝트를 관리하려면, Github 저장소를 로컬에 clone 해서 사용해야 하는데, 기존 프로젝트나 CLI(Command Line Interface) 등을 이용해서 프로젝트를 생성한 경우 Github에 등록하려면 오류가 발생한다. 구글에 찾아보면 비슷한 방법들이 있는데, 최근에 Github 저장소를</p>
                 </section>
             </a>
             <footer class="post-card-meta">
@@ -314,6 +418,58 @@ into the {body} of the default.hbs template -->
 
             <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
             
+                
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/welcome">
+                <div class="post-card-image" style="background-image: url(/assets/images/welcome.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/welcome">
+                <header class="post-card-header">
+                    
+                        
+                            
+                                <span class="post-card-tags">Getting started</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Welcome to Ghost</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    <p>Hey! Welcome to Ghost, it’s great to have you :) We know that first impressions are important, so we’ve populated your new site with some initial Getting Started posts that will help you</p>
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/images/ghost.png" alt="Ghost" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/ghost/">Ghost</a>
+                        </span>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </footer>
+        </div>
+    </article>
+
+            
 
         </div>
     </div>
@@ -330,18 +486,18 @@ into the {body} of the default.hbs template -->
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">Welcome to Ghost</div>
+    <div class="floating-header-title">Ionic3로  XMPP 멀티 채팅 구현</div>
     <div class="floating-header-share">
         <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
 </svg>
 </div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Welcome+to+Ghost&amp;url=https://junglestory.github.iowelcome"
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Ionic3%EB%A1%9C++XMPP+%EB%A9%80%ED%8B%B0+%EC%B1%84%ED%8C%85+%EA%B5%AC%ED%98%84&amp;url=https://junglestory.github.ioIonic3-xmpp"
             onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
 
         </a>
-        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://junglestory.github.iowelcome"
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://junglestory.github.ioIonic3-xmpp"
             onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
 
@@ -449,71 +605,6 @@ into the {body} of the default.hbs template -->
 
 
     <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
-    
-        <script>
-
-// NOTE: Scroll performance is poor in Safari
-// - this appears to be due to the events firing much more slowly in Safari.
-//   Dropping the scroll event and using only a raf loop results in smoother
-//   scrolling but continuous processing even when not scrolling
-$(document).ready(function () {
-    // Start fitVids
-    var $postContent = $(".post-full-content");
-    $postContent.fitVids();
-    // End fitVids
-
-    var progressBar = document.querySelector('progress');
-    var header = document.querySelector('.floating-header');
-    var title = document.querySelector('.post-full-title');
-
-    var lastScrollY = window.scrollY;
-    var lastWindowHeight = window.innerHeight;
-    var lastDocumentHeight = $(document).height();
-    var ticking = false;
-
-    function onScroll() {
-        lastScrollY = window.scrollY;
-        requestTick();
-    }
-
-    function onResize() {
-        lastWindowHeight = window.innerHeight;
-        lastDocumentHeight = $(document).height();
-        requestTick();
-    }
-
-    function requestTick() {
-        if (!ticking) {
-            requestAnimationFrame(update);
-        }
-        ticking = true;
-    }
-
-    function update() {
-        var trigger = title.getBoundingClientRect().top + window.scrollY;
-        var triggerOffset = title.offsetHeight + 35;
-        var progressMax = lastDocumentHeight - lastWindowHeight;
-
-        // show/hide floating header
-        if (lastScrollY >= trigger + triggerOffset) {
-            header.classList.add('floating-active');
-        } else {
-            header.classList.remove('floating-active');
-        }
-
-        progressBar.setAttribute('max', progressMax);
-        progressBar.setAttribute('value', lastScrollY);
-
-        ticking = false;
-    }
-
-    window.addEventListener('scroll', onScroll, {passive: true});
-    window.addEventListener('resize', onResize, false);
-
-    update();
-});
-</script>
-
     
 
     <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
