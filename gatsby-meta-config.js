@@ -1,12 +1,12 @@
 module.exports = {
   title: `Almost there`,
-  description: `Blog posted about ...`,
-  author: `[Your Name]`,
+  description: `Blog posted about open source`,
+  author: `[Mr. groove]`,
   introduction: `There is a difference between knowing the path and walking the path.`,
   siteUrl: `https://junglestory.github.io`, // Your blog site url
   social: {
     twitter: ``, // Your Twitter account
-    github: ``, // Your GitHub account
+    github: `junglestory`, // Your GitHub account
     medium: ``, // Your Medium account
     facebook: ``, // Your Facebook account
     linkedin: ``, // Your LinkedIn account
