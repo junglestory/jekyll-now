@@ -4,10 +4,16 @@ date: 2019-1-27 16:21:13
 lang: 'en'
 ---
 
-# Your name
+# Mr. Groove
 
 <div align="center">
 
-_Thank you for reading my resume. If you want to contact me, Please send me an email._
+When I say that the answer is for hackers to have day jobs,
+and work on beautiful software on the side, I'm not proposing this as a new idea.
+This is what open-source hacking is all about.
+What I'm saying is that open-source is probably the right model,
+because it has been independently confirmed by all the other makers.
+
+-- from Hackers & Painters
 
 </div>
